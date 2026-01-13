@@ -6,20 +6,26 @@
     font-family: "Segoe UI", sans-serif;
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    padding: 30px;
-    color: #fff;
     display: flex;
-    justify-content: center;
+    justify-content: center;  /* horizontal center */
+    align-items: center;      /* vertical center */
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    padding: 20px;
 }
 
 /* ================= CONTAINER ================= */
 .container {
     width: 100%;
     max-width: 1000px;
-    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* center all children horizontally */
 }
 
 /* ================= HEADINGS ================= */
@@ -41,12 +47,13 @@ h2 i, h3 i {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: 30px;
+    width: 100%;
     max-width: 450px;
-    margin: auto 0;
     border-radius: 15px;
     box-shadow: 0 15px 40px rgba(0,0,0,0.4);
     border: 1px solid rgba(255,255,255,0.25);
     transition: transform 0.3s;
+    margin-bottom: 25px;
 }
 
 .box:hover {
@@ -120,6 +127,8 @@ button:hover {
 /* ================= COMPLAINTS ================= */
 #myComplaints, #allComplaints {
     margin-top: 30px;
+    width: 100%;
+    max-width: 450px; /* keeps complaints compact and centered */
 }
 
 /* ================= COMPLAINT CARD ================= */
@@ -199,13 +208,14 @@ p {
         padding: 20px;
     }
 
-    .box {
-        padding: 25px;
+    .box, #myComplaints, #allComplaints {
+        max-width: 100%;
     }
 
     .complaint {
         padding: 15px;
     }
 }
+
 
 
