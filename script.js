@@ -1,6 +1,6 @@
 // ================== GLOBAL ===================
 const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "admin123";
+const ADMIN_PASSWORD = "admin@2026";
 
 // ================== USER FUNCTIONS ===================
 
@@ -150,3 +150,4 @@ function resolveComplaint(id) {
     localStorage.setItem("complaints", JSON.stringify(complaints));
     loadAdminComplaints();
 }
+
