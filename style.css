@@ -1,25 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
 
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 30px;
+    color: #333;
+}
 
-/* Container */
 .container {
     max-width: 1000px;
     margin: auto;
-    padding: 0 15px; /* Add side padding for small screens */
+}
+
+/* Headings */
+h2, h3 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+h2 i, h3 i {
+    margin-right: 8px;
 }
 
 /* Form Box */
 .box {
     background: #fff;
     padding: 25px;
-    width: 100%;          /* Full width by default */
-    max-width: 420px;     /* Max width for larger screens */
-    margin: 20px auto;    /* Centered with vertical spacing */
+    max-width: 420px;
+    margin: auto;
     border-radius: 12px;
     box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-    transition: 0.3s;     /* Smooth resizing */
 }
 
-/* Input Group */
+/* Input Group with Icons */
 .input-group {
     display: flex;
     align-items: center;
@@ -27,23 +46,48 @@
     background: #f1f1f1;
     border-radius: 8px;
     padding: 10px;
-    flex-wrap: wrap; /* Wrap icons and input if small */
 }
 
-/* Inputs */
+.input-group i {
+    color: #667eea;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
 input, textarea {
-    width: 100%;         /* Always full width */
+    width: 100%;
     border: none;
     background: transparent;
     outline: none;
     font-size: 14px;
 }
 
-/* Buttons */
+textarea {
+    resize: none;
+    height: 80px;
+}
+
+/* Button */
 button {
-    width: 100%;         /* Full width for small screens */
+    width: 100%;
+    margin-top: 20px;
     padding: 12px;
-    font-size: 16px;     /* Slightly bigger for touch devices */
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button i {
+    margin-right: 6px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.3);
 }
 
 /* Complaints Section */
@@ -59,38 +103,40 @@ button {
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     border-left: 6px solid #ff9800;
-    transition: 0.3s;
 }
 
-/* Complaint Card for Resolved */
 .complaint.resolved {
     border-left-color: #4caf50;
     background: #f6fff7;
 }
 
-/* Responsive for small screens */
+/* Complaint Title */
+.complaint b {
+    font-size: 16px;
+}
+
+/* Admin Button */
+.complaint button {
+    width: auto;
+    margin-top: 10px;
+    background: #4caf50;
+    padding: 8px 14px;
+    font-size: 13px;
+}
+
+/* Empty Message */
+p {
+    color: #fff;
+    text-align: center;
+}
+
+/* Responsive */
 @media (max-width: 600px) {
-    h2, h3 {
-        font-size: 18px;
-        text-align: center;
+    body {
+        padding: 15px;
     }
 
     .box {
         padding: 20px;
-        margin: 15px;
-    }
-
-    button {
-        font-size: 15px;
-        padding: 10px;
-    }
-
-    .input-group i {
-        font-size: 14px;
-        margin-right: 6px;
-    }
-
-    .complaint {
-        padding: 15px;
     }
 }
