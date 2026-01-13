@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complaint Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h2><i class="fa-solid fa-file-circle-exclamation"></i> Complaint Registration</h2>
+
+    <div class="box">
+        <div class="input-group">
+            <i class="fa fa-user"></i>
+            <input type="text" id="name" placeholder="Your Name" required>
+        </div>
+
+        <div class="input-group">
+            <i class="fa fa-heading"></i>
+            <input type="text" id="title" placeholder="Complaint Title" required>
+        </div>
+
+        <div class="input-group">
+            <i class="fa fa-message"></i>
+            <textarea id="desc" placeholder="Complaint Description"></textarea>
+        </div>
+
+        <button onclick="submitComplaint()">
+            <i class="fa fa-paper-plane"></i> Submit Complaint
+        </button>
+    </div>
+
+    <h3><i class="fa fa-list"></i> Your Complaints</h3>
+    <div id="myComplaints"></div>
+
+</div>
+
+<script src="script.js"></script>
+<script>
+    // Load user complaints on page load
+    showUserComplaints();
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- LOGIN BOX -->
+    <div class="box" id="loginBox">
+        <h2><i class="fa-solid fa-lock"></i> Admin Login</h2>
+
+        <div class="input-group">
+            <i class="fa fa-user"></i>
+            <input type="text" id="adminUser" placeholder="Username">
+        </div>
+
+        <div class="input-group">
+            <i class="fa fa-key"></i>
+            <input type="password" id="adminPass" placeholder="Password">
+        </div>
+
+        <button onclick="adminLogin()">
+            <i class="fa fa-right-to-bracket"></i> Login
+        </button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="adminDashboard" style="display:none;">
+        <h2><i class="fa-solid fa-user-shield"></i> Admin Dashboard</h2>
+
+        <button onclick="logout()" style="max-width:200px;margin:10px auto;display:block;background:#e53935;">
+            <i class="fa fa-sign-out-alt"></i> Logout
+        </button>
+
+        <div id="allComplaints"></div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+<script>
+    checkAdminLogin();
+</script>
+
+</body>
+</html>
