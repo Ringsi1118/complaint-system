@@ -140,3 +140,98 @@ p {
         padding: 20px;
     }
 }
+/* Container */
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 0 15px; /* Add side padding for small screens */
+}
+
+/* Form Box */
+.box {
+    background: #fff;
+    padding: 25px;
+    width: 100%;          /* Full width by default */
+    max-width: 420px;     /* Max width for larger screens */
+    margin: 20px auto;    /* Centered with vertical spacing */
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    transition: 0.3s;     /* Smooth resizing */
+}
+
+/* Input Group */
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    background: #f1f1f1;
+    border-radius: 8px;
+    padding: 10px;
+    flex-wrap: wrap; /* Wrap icons and input if small */
+}
+
+/* Inputs */
+input, textarea {
+    width: 100%;         /* Always full width */
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+}
+
+/* Buttons */
+button {
+    width: 100%;         /* Full width for small screens */
+    padding: 12px;
+    font-size: 16px;     /* Slightly bigger for touch devices */
+}
+
+/* Complaints Section */
+#myComplaints, #allComplaints {
+    margin-top: 25px;
+}
+
+/* Complaint Card */
+.complaint {
+    background: #fff;
+    padding: 18px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    border-left: 6px solid #ff9800;
+    transition: 0.3s;
+}
+
+/* Complaint Card for Resolved */
+.complaint.resolved {
+    border-left-color: #4caf50;
+    background: #f6fff7;
+}
+
+/* Responsive for small screens */
+@media (max-width: 600px) {
+    h2, h3 {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .box {
+        padding: 20px;
+        margin: 15px;
+    }
+
+    button {
+        font-size: 15px;
+        padding: 10px;
+    }
+
+    .input-group i {
+        font-size: 14px;
+        margin-right: 6px;
+    }
+
+    .complaint {
+        padding: 15px;
+    }
+}
+
