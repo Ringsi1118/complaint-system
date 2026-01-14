@@ -71,6 +71,9 @@ function showUserComplaints() {
         return;
     }
 
+    // Sort newest first
+    complaints.sort((a, b) => b.id - a.id);
+
     let html = "";
     complaints.forEach(c => {
         html += `
@@ -134,6 +137,9 @@ function loadAdminComplaints() {
         return;
     }
 
+    // Sort newest first
+    complaints.sort((a, b) => b.id - a.id);
+
     let html = "";
     complaints.forEach(c => {
         html += `
@@ -169,6 +175,6 @@ function resolveComplaint(id) {
     showUserComplaints();
 }
 
-// Load user complaints on page load
+// ================== INITIAL LOAD ===================
 showUserComplaints();
 checkAdminLogin();
