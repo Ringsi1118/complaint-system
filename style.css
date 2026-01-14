@@ -216,6 +216,74 @@ p {
         padding: 15px;
     }
 }
+/* ================= STATUS BADGES ================= */
+.complaint .status {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.complaint .status.Submitted {
+    background: #ff9800; /* Bright orange */
+}
+
+.complaint .status.Resolved {
+    background: #4caf50; /* Green */
+}
+
+/* Resolved complaint styling */
+.complaint.resolved {
+    opacity: 0.7;
+    border-left-color: #4caf50;
+    color: #ddd;
+}
+
+.complaint.resolved b,
+.complaint.resolved small {
+    color: #ddd;
+}
+
+/* Admin resolve button styling */
+.complaint button {
+    width: auto;
+    margin-top: 12px;
+    background: #4caf50;
+    padding: 8px 16px;
+    font-size: 13px;
+    border-radius: 8px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.complaint button:hover {
+    background: #43a047;
+    transform: scale(1.05);
+}
+
+/* Complaint description */
+.complaint p {
+    margin: 8px 0;
+    line-height: 1.4;
+    color: #fff;
+}
+
+/* Responsive tweaks */
+@media (max-width: 650px) {
+    .box, #myComplaints, #allComplaints {
+        max-width: 100%;
+    }
+
+    .complaint {
+        padding: 15px;
+    }
+}
+
 
 
 
