@@ -2,6 +2,21 @@
 const ADMIN_USERNAME = "admin";
 const ADMIN_PASSWORD = "admin@2026";
 
+// ================== UPDATE OLD COMPLAINTS ===================
+let complaints = JSON.parse(localStorage.getItem("complaints")) || [];
+let updated = false;
+
+complaints.forEach(c => {
+    if (!c.timestamp) {
+        c.timestamp = new Date().toLocaleString(); // Add current date/time
+        updated = true;
+    }
+});
+
+if (updated) {
+    localStorage.setItem("complaints", JSON.stringify(complaints));
+}
+
 // ================== UTILITY FUNCTIONS ===================
 // Escape HTML to prevent injection
 function escapeHTML(str) {
@@ -69,7 +84,7 @@ function showUserComplaints() {
                 <b>${escapeHTML(c.title)}</b><br>
                 <span class="status ${c.status}">${c.status}</span><br>
                 ${escapeHTML(c.desc) ? `<p>${escapeHTML(c.desc)}</p>` : ""}
-                <small>Submitted on: ${c.timestamp}</small>
+                <small>Submitted on: ${c.timestamp || "Unknown"}</small>
             </div>
         `;
     });
@@ -139,7 +154,7 @@ function loadAdminComplaints() {
                 <span class="status ${c.status}">${c.status}</span><br>
                 <b>User:</b> ${escapeHTML(c.name)}<br>
                 <b>Description:</b> ${escapeHTML(c.desc)}<br>
-                <small>Submitted on: ${c.timestamp}</small><br>
+                <small>Submitted on: ${c.timestamp || "Unknown"}</small><br>
                 ${c.status !== "Resolved" ? `<button onclick="resolveComplaint(${c.id})">Resolve</button>` : ""}
             </div>
         `;
@@ -166,6 +181,7 @@ function resolveComplaint(id) {
     loadAdminComplaints();
     showUserComplaints();
 }
+
 
 
 
