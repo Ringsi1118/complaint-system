@@ -8,14 +8,14 @@
 
 html, body {
     height: 100%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
 }
 
 body {
     display: flex;
-    justify-content: center;  /* horizontal center */
-    align-items: center;      /* vertical center */
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: #fff;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
 }
 
@@ -25,7 +25,7 @@ body {
     max-width: 1000px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* center all children horizontally */
+    align-items: center;
 }
 
 /* ================= HEADINGS ================= */
@@ -79,7 +79,6 @@ h2 i, h3 i {
     color: #fff;
     font-size: 16px;
     margin-right: 12px;
-    flex-shrink: 0;
 }
 
 input, textarea {
@@ -124,14 +123,13 @@ button:hover {
     box-shadow: 0 12px 25px rgba(0,0,0,0.35);
 }
 
-/* ================= COMPLAINTS ================= */
+/* ================= COMPLAINT CARDS ================= */
 #myComplaints, #allComplaints {
     margin-top: 30px;
     width: 100%;
-    max-width: 450px; /* keeps complaints compact and centered */
+    max-width: 450px;
 }
 
-/* ================= COMPLAINT CARD ================= */
 .complaint {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
@@ -179,6 +177,10 @@ button:hover {
     color: #fff;
 }
 
+.complaint p {
+    margin: 10px 0;
+}
+
 /* ================= ADMIN BUTTON ================= */
 .complaint button {
     width: auto;
@@ -204,10 +206,6 @@ p {
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 650px) {
-    body {
-        padding: 20px;
-    }
-
     .box, #myComplaints, #allComplaints {
         max-width: 100%;
     }
@@ -216,74 +214,3 @@ p {
         padding: 15px;
     }
 }
-/* ================= STATUS BADGES ================= */
-.complaint .status {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #fff;
-}
-
-.complaint .status.Submitted {
-    background: #ff9800; /* Bright orange */
-}
-
-.complaint .status.Resolved {
-    background: #4caf50; /* Green */
-}
-
-/* Resolved complaint styling */
-.complaint.resolved {
-    opacity: 0.7;
-    border-left-color: #4caf50;
-    color: #ddd;
-}
-
-.complaint.resolved b,
-.complaint.resolved small {
-    color: #ddd;
-}
-
-/* Admin resolve button styling */
-.complaint button {
-    width: auto;
-    margin-top: 12px;
-    background: #4caf50;
-    padding: 8px 16px;
-    font-size: 13px;
-    border-radius: 8px;
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.complaint button:hover {
-    background: #43a047;
-    transform: scale(1.05);
-}
-
-/* Complaint description */
-.complaint p {
-    margin: 8px 0;
-    line-height: 1.4;
-    color: #fff;
-}
-
-/* Responsive tweaks */
-@media (max-width: 650px) {
-    .box, #myComplaints, #allComplaints {
-        max-width: 100%;
-    }
-
-    .complaint {
-        padding: 15px;
-    }
-}
-
-
-
-
