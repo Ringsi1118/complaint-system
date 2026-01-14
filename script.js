@@ -8,7 +8,7 @@ let updated = false;
 
 complaints.forEach(c => {
     if (!c.timestamp) {
-        c.timestamp = new Date().toLocaleString(); // Add current date/time
+        c.timestamp = new Date().toLocaleString();
         updated = true;
     }
 });
@@ -18,7 +18,6 @@ if (updated) {
 }
 
 // ================== UTILITY FUNCTIONS ===================
-// Escape HTML to prevent injection
 function escapeHTML(str) {
     if (!str) return "";
     return str.replace(/&/g, "&amp;")
@@ -29,8 +28,6 @@ function escapeHTML(str) {
 }
 
 // ================== USER FUNCTIONS ===================
-
-// Submit Complaint
 function submitComplaint() {
     const nameInput = document.getElementById("name");
     const titleInput = document.getElementById("title");
@@ -55,17 +52,14 @@ function submitComplaint() {
     complaints.push(complaint);
     localStorage.setItem("complaints", JSON.stringify(complaints));
 
-    // Clear inputs
     nameInput.value = "";
     titleInput.value = "";
     descInput.value = "";
 
-    // Show feedback
     alert("Complaint Submitted Successfully!");
     showUserComplaints();
 }
 
-// Show user complaints
 function showUserComplaints() {
     const div = document.getElementById("myComplaints");
     if (!div) return;
@@ -93,8 +87,6 @@ function showUserComplaints() {
 }
 
 // ================== ADMIN LOGIN FUNCTIONS ===================
-
-// Check login status on page load
 function checkAdminLogin() {
     const loginBox = document.getElementById("loginBox");
     const dashboard = document.getElementById("adminDashboard");
@@ -110,7 +102,6 @@ function checkAdminLogin() {
     }
 }
 
-// Admin login
 function adminLogin() {
     const userInput = document.getElementById("adminUser");
     const passInput = document.getElementById("adminPass");
@@ -126,15 +117,12 @@ function adminLogin() {
     }
 }
 
-// Logout
 function logout() {
     sessionStorage.removeItem("adminLoggedIn");
     location.reload();
 }
 
 // ================== ADMIN FUNCTIONS ===================
-
-// Load all complaints in admin dashboard
 function loadAdminComplaints() {
     const div = document.getElementById("allComplaints");
     if (!div) return;
@@ -153,7 +141,7 @@ function loadAdminComplaints() {
                 <b>${escapeHTML(c.title)}</b><br>
                 <span class="status ${c.status}">${c.status}</span><br>
                 <b>User:</b> ${escapeHTML(c.name)}<br>
-                <b>Description:</b> ${escapeHTML(c.desc)}<br>
+                <b>Description:</b> ${escapeHTML(c.desc)}</b><br>
                 <small>Submitted on: ${c.timestamp || "Unknown"}</small><br>
                 ${c.status !== "Resolved" ? `<button onclick="resolveComplaint(${c.id})">Resolve</button>` : ""}
             </div>
@@ -163,7 +151,6 @@ function loadAdminComplaints() {
     div.innerHTML = html;
 }
 
-// Resolve a complaint
 function resolveComplaint(id) {
     if (sessionStorage.getItem("adminLoggedIn") !== "true") {
         alert("Unauthorized access");
@@ -182,6 +169,6 @@ function resolveComplaint(id) {
     showUserComplaints();
 }
 
-
-
-
+// Load user complaints on page load
+showUserComplaints();
+checkAdminLogin();
