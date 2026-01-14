@@ -2,70 +2,84 @@
 const ADMIN_USERNAME = "admin";
 const ADMIN_PASSWORD = "admin@2026";
 
+// ================== UTILITY FUNCTIONS ===================
+// Escape HTML to prevent injection
+function escapeHTML(str) {
+    if (!str) return "";
+    return str.replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#039;");
+}
+
 // ================== USER FUNCTIONS ===================
 
 // Submit Complaint
 function submitComplaint() {
-    let nameInput = document.getElementById("name");
-    let titleInput = document.getElementById("title");
-    let descInput = document.getElementById("desc");
+    const nameInput = document.getElementById("name");
+    const titleInput = document.getElementById("title");
+    const descInput = document.getElementById("desc");
 
-    if (!nameInput || !titleInput || !descInput) return;
-
-    if (!nameInput.value || !titleInput.value) {
+    if (!nameInput.value.trim() || !titleInput.value.trim()) {
         alert("Please fill all required fields");
         return;
     }
 
-    let complaints = JSON.parse(localStorage.getItem("complaints")) || [];
+    const complaints = JSON.parse(localStorage.getItem("complaints")) || [];
 
-    let complaint = {
+    const complaint = {
         id: Date.now(),
-        name: nameInput.value,
-        title: titleInput.value,
-        desc: descInput.value,
-        status: "Submitted"
+        name: nameInput.value.trim(),
+        title: titleInput.value.trim(),
+        desc: descInput.value.trim(),
+        status: "Submitted",
+        timestamp: new Date().toLocaleString()
     };
 
     complaints.push(complaint);
     localStorage.setItem("complaints", JSON.stringify(complaints));
 
-    alert("Complaint Submitted Successfully!");
-
+    // Clear inputs
     nameInput.value = "";
     titleInput.value = "";
     descInput.value = "";
 
+    // Show feedback
+    alert("Complaint Submitted Successfully!");
     showUserComplaints();
 }
 
 // Show user complaints
 function showUserComplaints() {
-    let div = document.getElementById("myComplaints");
+    const div = document.getElementById("myComplaints");
     if (!div) return;
 
-    let complaints = JSON.parse(localStorage.getItem("complaints")) || [];
-
-    div.innerHTML = "";
+    const complaints = JSON.parse(localStorage.getItem("complaints")) || [];
 
     if (complaints.length === 0) {
         div.innerHTML = "<p>No complaints yet</p>";
         return;
     }
 
+    let html = "";
     complaints.forEach(c => {
-        div.innerHTML += `
+        html += `
             <div class="complaint ${c.status === "Resolved" ? "resolved" : ""}">
-                <b>${c.title}</b><br>
-                Status: ${c.status}
+                <b>${escapeHTML(c.title)}</b><br>
+                <span class="status ${c.status}">${c.status}</span><br>
+                ${escapeHTML(c.desc) ? `<p>${escapeHTML(c.desc)}</p>` : ""}
+                <small>Submitted on: ${c.timestamp}</small>
             </div>
         `;
     });
+
+    div.innerHTML = html;
 }
 
-// ================== ADMIN LOGIN ===================
+// ================== ADMIN LOGIN FUNCTIONS ===================
 
-// Check login status
+// Check login status on page load
 function checkAdminLogin() {
     const loginBox = document.getElementById("loginBox");
     const dashboard = document.getElementById("adminDashboard");
@@ -75,18 +89,19 @@ function checkAdminLogin() {
         loginBox.style.display = "none";
         dashboard.style.display = "block";
         loadAdminComplaints();
+    } else {
+        loginBox.style.display = "block";
+        dashboard.style.display = "none";
     }
 }
 
-// Login function
+// Admin login
 function adminLogin() {
     const userInput = document.getElementById("adminUser");
     const passInput = document.getElementById("adminPass");
 
-    if (!userInput || !passInput) return;
-
-    const user = userInput.value;
-    const pass = passInput.value;
+    const user = userInput.value.trim();
+    const pass = passInput.value.trim();
 
     if (user === ADMIN_USERNAME && pass === ADMIN_PASSWORD) {
         sessionStorage.setItem("adminLoggedIn", "true");
@@ -106,48 +121,51 @@ function logout() {
 
 // Load all complaints in admin dashboard
 function loadAdminComplaints() {
-    const dashboard = document.getElementById("adminDashboard");
-    if (!dashboard) return;
-
-    let div = document.getElementById("allComplaints");
+    const div = document.getElementById("allComplaints");
     if (!div) return;
 
-    let complaints = JSON.parse(localStorage.getItem("complaints")) || [];
-    div.innerHTML = "";
+    const complaints = JSON.parse(localStorage.getItem("complaints")) || [];
 
     if (complaints.length === 0) {
         div.innerHTML = "<p>No complaints submitted yet</p>";
         return;
     }
 
+    let html = "";
     complaints.forEach(c => {
-        div.innerHTML += `
+        html += `
             <div class="complaint ${c.status === "Resolved" ? "resolved" : ""}">
-                <b>${c.title}</b><br>
-                User: ${c.name}<br>
-                Description: ${c.desc}<br>
-                Status: ${c.status}<br>
+                <b>${escapeHTML(c.title)}</b><br>
+                <span class="status ${c.status}">${c.status}</span><br>
+                <b>User:</b> ${escapeHTML(c.name)}<br>
+                <b>Description:</b> ${escapeHTML(c.desc)}<br>
+                <small>Submitted on: ${c.timestamp}</small><br>
                 ${c.status !== "Resolved" ? `<button onclick="resolveComplaint(${c.id})">Resolve</button>` : ""}
             </div>
         `;
     });
+
+    div.innerHTML = html;
 }
 
-// Resolve complaint
+// Resolve a complaint
 function resolveComplaint(id) {
     if (sessionStorage.getItem("adminLoggedIn") !== "true") {
         alert("Unauthorized access");
         return;
     }
 
-    let complaints = JSON.parse(localStorage.getItem("complaints")) || [];
+    const complaints = JSON.parse(localStorage.getItem("complaints")) || [];
 
-    complaints = complaints.map(c => {
+    const updatedComplaints = complaints.map(c => {
         if (c.id === id) c.status = "Resolved";
         return c;
     });
 
-    localStorage.setItem("complaints", JSON.stringify(complaints));
+    localStorage.setItem("complaints", JSON.stringify(updatedComplaints));
     loadAdminComplaints();
+    showUserComplaints();
 }
+
+
 
