@@ -36,19 +36,32 @@
             <i class="fa fa-sign-out-alt"></i> Logout
         </button>
 
+        <!-- SEARCH & FILTER -->
+        <div class="controls">
+            <input type="text" id="search" placeholder="Search by title or user...">
+            <select id="filter">
+                <option value="all">All</option>
+                <option value="Submitted">Submitted</option>
+                <option value="Resolved">Resolved</option>
+            </select>
+        </div>
+
         <div id="allComplaints"></div>
     </div>
-   
-
 
 </div>
 
 <script src="script.js"></script>
 <script>
+    // Attach search/filter events
+    document.getElementById("search")?.addEventListener("input", loadAdminComplaints);
+    document.getElementById("filter")?.addEventListener("change", loadAdminComplaints);
+
     checkAdminLogin();
 </script>
 
 </body>
 </html>
+
 
 
