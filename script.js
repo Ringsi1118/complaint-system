@@ -2,7 +2,7 @@
 const ADMIN_USERNAME = "admin";
 const ADMIN_PASSWORD = "admin@2026";
 
-// ================== UPDATE OLD COMPLAINTS ===================
+// ================== LOAD & UPDATE OLD COMPLAINTS ===================
 let complaints = JSON.parse(localStorage.getItem("complaints")) || [];
 let updated = false;
 
@@ -13,11 +13,9 @@ complaints.forEach(c => {
     }
 });
 
-if (updated) {
-    localStorage.setItem("complaints", JSON.stringify(complaints));
-}
+if (updated) localStorage.setItem("complaints", JSON.stringify(complaints));
 
-// ================== UTILITY FUNCTIONS ===================
+// ================== UTILITY ===================
 function escapeHTML(str) {
     if (!str) return "";
     return str.replace(/&/g, "&amp;")
@@ -65,13 +63,11 @@ function showUserComplaints() {
     if (!div) return;
 
     const complaints = JSON.parse(localStorage.getItem("complaints")) || [];
-
     if (complaints.length === 0) {
         div.innerHTML = "<p>No complaints yet</p>";
         return;
     }
 
-    // Sort newest first
     complaints.sort((a, b) => b.id - a.id);
 
     let html = "";
@@ -80,7 +76,6 @@ function showUserComplaints() {
             <div class="complaint ${c.status === "Resolved" ? "resolved" : ""}">
                 <b>${escapeHTML(c.title)}</b><br>
                 <span class="status ${c.status}">${c.status}</span><br>
-                ${escapeHTML(c.desc) ? `<p>${escapeHTML(c.desc)}</p>` : ""}
                 <small>Submitted on: ${c.timestamp || "Unknown"}</small>
             </div>
         `;
@@ -89,7 +84,7 @@ function showUserComplaints() {
     div.innerHTML = html;
 }
 
-// ================== ADMIN LOGIN FUNCTIONS ===================
+// ================== ADMIN LOGIN ===================
 function checkAdminLogin() {
     const loginBox = document.getElementById("loginBox");
     const dashboard = document.getElementById("adminDashboard");
@@ -130,14 +125,23 @@ function loadAdminComplaints() {
     const div = document.getElementById("allComplaints");
     if (!div) return;
 
-    const complaints = JSON.parse(localStorage.getItem("complaints")) || [];
+    let complaints = JSON.parse(localStorage.getItem("complaints")) || [];
+
+    // Filter/search
+    const search = document.getElementById("search")?.value.toLowerCase() || "";
+    const filter = document.getElementById("filter")?.value || "all";
+
+    complaints = complaints.filter(c => {
+        const matchesSearch = c.name.toLowerCase().includes(search) || c.title.toLowerCase().includes(search);
+        const matchesFilter = filter === "all" || c.status === filter;
+        return matchesSearch && matchesFilter;
+    });
 
     if (complaints.length === 0) {
-        div.innerHTML = "<p>No complaints submitted yet</p>";
+        div.innerHTML = "<p>No complaints found</p>";
         return;
     }
 
-    // Sort newest first
     complaints.sort((a, b) => b.id - a.id);
 
     let html = "";
@@ -149,7 +153,8 @@ function loadAdminComplaints() {
                 <b>User:</b> ${escapeHTML(c.name)}<br>
                 <b>Description:</b> ${escapeHTML(c.desc)}</b><br>
                 <small>Submitted on: ${c.timestamp || "Unknown"}</small><br>
-                ${c.status !== "Resolved" ? `<button onclick="resolveComplaint(${c.id})">Resolve</button>` : ""}
+                ${c.status !== "Resolved" ? `<button style="background:#4caf50" onclick="resolveComplaint(${c.id})">Resolve</button>` : ""}
+                <button style="background:#e53935" onclick="deleteComplaint(${c.id})">Delete</button>
             </div>
         `;
     });
@@ -163,14 +168,26 @@ function resolveComplaint(id) {
         return;
     }
 
-    const complaints = JSON.parse(localStorage.getItem("complaints")) || [];
-
-    const updatedComplaints = complaints.map(c => {
+    let complaints = JSON.parse(localStorage.getItem("complaints")) || [];
+    complaints = complaints.map(c => {
         if (c.id === id) c.status = "Resolved";
         return c;
     });
 
-    localStorage.setItem("complaints", JSON.stringify(updatedComplaints));
+    localStorage.setItem("complaints", JSON.stringify(complaints));
+    loadAdminComplaints();
+    showUserComplaints();
+}
+
+function deleteComplaint(id) {
+    if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+        alert("Unauthorized access");
+        return;
+    }
+
+    let complaints = JSON.parse(localStorage.getItem("complaints")) || [];
+    complaints = complaints.filter(c => c.id !== id);
+    localStorage.setItem("complaints", JSON.stringify(complaints));
     loadAdminComplaints();
     showUserComplaints();
 }
